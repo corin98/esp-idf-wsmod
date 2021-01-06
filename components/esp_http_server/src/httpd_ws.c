@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/random.h>
+#define LOG_LOCAL_LEVEL ESP_LOG_NONE //ESP_LOG_DEBUG
 #include <esp_log.h>
 #include <esp_err.h>
 #include <mbedtls/sha1.h>
@@ -67,6 +68,7 @@ static bool httpd_ws_get_response_subprotocol(const char *supported_subprotocol,
 
     if (supported_subprotocol == NULL)
     {
+        //printf("XXXXXXXXXXXXXXXXXXXXXXXXXXXX 1 protocol %s not supprted\n", subprotocol);
         ESP_LOGW(TAG, "Sec-WebSocket-Protocol %s not supported, URI do not support any subprotocols", subprotocol);
         return false;
     }
@@ -74,6 +76,7 @@ static bool httpd_ws_get_response_subprotocol(const char *supported_subprotocol,
     /* Get first subprotocol from comma seperated list */
     if (strcmp(subprotocol, supported_subprotocol) == 0)
     {
+        //printf("XXXXXXXXXXXXXXXXXXXXXXXXXXXX 2 %s and expected is %s\n", subprotocol, supported_subprotocol);
         ESP_LOGD(TAG, "Requested subprotocol supported: %s", subprotocol);
         return true;
     }
